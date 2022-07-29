@@ -10,6 +10,10 @@
 
 基于python轻量级框架PyWebIO开发的网站导航。支持网站分类展示、全局模糊查询及主题壁纸设置等功能。
 
+## 页面截图
+
+![](./resources/web-nav.png)
+
 <div align="center">
  
   # 源码开源敬请期待哈！
