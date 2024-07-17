@@ -5,15 +5,16 @@ class Const:
     DEL = 'del'
     DIR_BG = 'resources/imgs/bg/'
     DIR_DOWLOAD = 'resources/downloads/'
-    PRE_DOWLOAD = 'http://10.10.0.201:7777/static/downloads/'
     THEMES = ['default', 'dark', 'sketchy', 'minty', 'yeti']
     IMG_BG_DEFAULT = 'bg0.jpg'
     DIR_STATIC = './resources'
     # section
     SECTION_STYLE = 'style'
+    SECTION_DEPLOY = 'deploy'
     # key
     KEY_BGIMG = 'bgimg'
     KEY_THEME = 'theme'
+    KEY_HOSTIP = 'hostip'
     FILE_CONF = 'conf.ini'
 
 
@@ -60,15 +61,3 @@ class Style:
     # 背景样式
     BG_PRE = "body {cursor: url(static/imgs/cursor/shubiao1.png), auto;}\n.bg {position: absolute;top: 0;left: 0;background: url('"
     BG_SUF = "') no-repeat;width: 100%;height: 100%;overflow: hidden;background-size: cover;opacity: .2;z-index: -1;}"
-
-
-class Config:
-    """配置"""
-
-    MYSQL = {
-        'host': 'elephant',
-        'port': 3306,
-        'user': 'root',
-        'password': 'MySQL1234!',
-        'database': 'db_site_navigation',
-    }

@@ -5,7 +5,7 @@ from pywebio.pin import *
 from pywebio.session import *
 from functools import partial
 import random
-from wlfutil.all import LogUtil, ConfUtil, FileUtil, UniUtil
+from core.util import LogUtil, ConfUtil, FileUtil, UniUtil
 import os
 from core.const import *
 from db.crud import *
@@ -149,11 +149,18 @@ def get_link(name_link_dict):
     return res
 
 
+def get_download_url(file: str):
+    """业务函数"""
+    hostip = ConfUtil.get_value(Const.FILE_CONF, Const.SECTION_DEPLOY, Const.KEY_HOSTIP)
+    prefix = f'http://{hostip}:7777/static/downloads/'
+    return f'{prefix}/{file}'
+
+
 def downloads_tabs():
     """下载文件"""
     files = {}
     for file in os.listdir(Const.DIR_DOWLOAD):
-        files[file] = f'{Const.PRE_DOWLOAD}/{file}'
+        files[file] = get_download_url(file)
     links = get_link(files)
     return {'title': '下载', 'content': put_scrollable(links, height=980, keep_bottom=False, border=False)}
 

@@ -1,5 +1,18 @@
-from core.const import Config
-from wlfutil.all import MysqlUtil, LogUtil
+# from core.const import Config
+from core.util import MysqlUtil, LogUtil, ConfUtil
+from core.const import *
+
+class Config:
+    """数据库配置"""
+    hostip = ConfUtil.get_value(Const.FILE_CONF, Const.SECTION_DEPLOY, Const.KEY_HOSTIP)
+    MYSQL = {
+        'host': hostip,
+        'port': 3306,
+        'user': 'root',
+        # 'password': 'MySQL1234!',
+        'password': 'webnav123456',
+        'database': 'db_site_navigation',
+    }
 
 
 def get_site_type():
