@@ -1,14 +1,11 @@
 <img height="56px" src="./resources/imgs/waisaa.png" alt="WebNav" />
 
-A privacy-first, lightweight note-taking service. Easily capture and share your great thoughts.
+A privacy-first, lightweight website navigation service developed based on the Python framework PyWebIO.
 
 <a href="https://github.com/waisaa/web-nav">Home Page</a> •
-<a href="https://blog.csdn.net/qq_42761569?type=blog">Blogs</a> •
+<a href="https://blog.csdn.net/qq_42761569?type=blog">Blogs</a>
 
-<p>
-  <a href="https://hub.docker.com/r/neosmemo/memos"><img alt="Docker pull" src="https://img.shields.io/docker/pulls/neosmemo/memos.svg"/></a>
-  <a href="https://discord.gg/tfPJa4UmAv"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-5865f2?logo=discord&logoColor=f5f5f5" /></a>
-</p>
+[![](https://img.shields.io/badge/webui-webnav-9cf.svg)](http://localhost:7777/) [![](https://img.shields.io/badge/document-pywebio-blue.svg)](https://pywebio.readthedocs.io/) [![](https://img.shields.io/badge/license-WLF-brightgreen.svg)](https://github.com/waisaa/web-nav/tree/main/LICENSE)
 
 ![demo](./resources/imgs/webnav.png)
 
