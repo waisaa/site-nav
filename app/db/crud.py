@@ -1,17 +1,16 @@
 # from core.const import Config
 from core.util import MysqlUtil, LogUtil, ConfUtil
 from core.const import *
+import os
 
 class Config:
     """数据库配置"""
-    hostip = ConfUtil.get_value(Const.FILE_CONF, Const.SECTION_DEPLOY, Const.KEY_HOSTIP)
     MYSQL = {
-        'host': hostip,
-        'port': 3306,
-        'user': 'root',
-        # 'password': 'MySQL1234!',
-        'password': 'webnav123456',
-        'database': 'db_site_navigation',
+        'host': os.getenv('DB_HOST'),
+        'port': int(os.getenv('DB_PORT', 3306)),
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
+        'database': os.getenv('DB_NAME'),
     }
 
 
@@ -49,6 +48,7 @@ def get_site_by_name_like(name):
     """根据网站名称模糊查询"""
     res = {}
     sql = f"SELECT name, link FROM sites WHERE name LIKE '%{name}%'"
+    LogUtil.info('sql', sql)
     sql_res = MysqlUtil.get(Config.MYSQL, sql)
     if sql_res:
         for t in sql_res:

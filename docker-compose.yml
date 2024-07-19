@@ -1,24 +1,33 @@
 version: '3'
 services:
-  wlf_mysql:
+  mysql:
     image: mysql:5.7
     container_name: wlf_mysql
-    restart: always
-    network_mode: 'bridge'
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+     MYSQL_ROOT_PASSWORD: webnav123456
+     MYSQL_DATABASE: db_site_navigation
+     TZ: Asia/Shanghai
+    restart: on-failure
     ports:
      - "3306:3306"
     volumes:
-     - ./mysql/conf:/etc/mysql/conf
+     - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
      - ./mysql/data:/var/lib/mysql
-     - ./mysql/logs:/logs
      - ./mysql/initdb:/docker-entrypoint-initdb.d
-    environment:
-     MYSQL_ROOT_PASSWORD: webnav123456
-     MYSQL_DATABASE: "db_site_navigation"
-  wlf_webnav:
-    image: wlf_webnav:v1.0.0
+  webnav:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: wlf_webnav
-    restart: always
-    network_mode: 'bridge'
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: webnav123456
+      DB_NAME: db_site_navigation
+    restart: on-failure
     ports:
      - "7777:7777"

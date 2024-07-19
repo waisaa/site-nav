@@ -7,6 +7,7 @@ from functools import partial
 import random
 from core.util import LogUtil, ConfUtil, FileUtil, UniUtil
 import os
+import time
 from core.const import *
 from db.crud import *
 from core.func import *
@@ -23,11 +24,6 @@ def config_style():
 def refresh():
     """刷新当前页面"""
     put_html(Style.REFRESH)
-
-
-def do_reset():
-    """重置信息"""
-    refresh()
 
 
 def get_bg_style():
@@ -77,7 +73,7 @@ def write():
     put_input('site_name', label='网站名称').style('font-size: 120%')
     put_input('site_link', label='网站地址', placeholder='Enter a valid url').style('font-size: 120%')
     btns = [dict(label='提交', value='ok', color='primary'), dict(label='重置', value='re', color='warning')]
-    put_buttons(btns, small=False, group=True, outline=True, onclick=[do_save, do_reset]).style('font-size: 120%')
+    put_buttons(btns, small=False, group=True, outline=True, onclick=[do_save, refresh]).style('font-size: 120%')
     while True:
         pin_wait_change('site_type', 'site_name', 'site_link')
         site_type = pin.site_type
@@ -131,7 +127,8 @@ def search_for():
         changed = pin_wait_change('search', timeout=10)
         name_search = pin.search
         name_search = name_search if len(name_search) != 0 else None
-        LogUtil.info(f'name_search:{name_search}')
+        name_search.replace("'", "")
+        # LogUtil.info(f'name_search:{name_search}')
         res_search = get_site_by_name_like(name_search)
         with use_scope('res', clear=True):
             for k in res_search:
@@ -178,8 +175,8 @@ def get_tabs():
         # tab = {'title': type_name, 'content': links}
         res.append(tab)
     # 下载文件
-    res.append(downloads_tabs())
-    # LogUtil.info(f'tabs:{res}')
+    # res.append(downloads_tabs())
+    LogUtil.info(f'tabs:{res}')
     return res
 
 
@@ -283,6 +280,9 @@ def index():
 
 def main():
     """网站导航"""
+    LogUtil.info('')
+    LogUtil.info('start success!')
+    LogUtil.info('')
     start_server(
         applications=[
             index,
