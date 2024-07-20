@@ -52,6 +52,10 @@ docker-compose down
 > This command is only applicable for Unix/Linux systems.
 >
 > The `./mysql/data` directory should be used as the data directory on your local machine, while `/var/lib/mysql` is the directory of the volume in Docker and should not be modified.
+>
+> You need to allow ports 7777 and 3306 in the local firewall while it is a ecs, you also need to allow them in the security policy.
+>
+> Of course, you can modify anything you like by modifying the source code, such as the service port, favicon, website type, etc.
 
 ## Contribution
 

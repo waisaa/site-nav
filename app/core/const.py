@@ -15,7 +15,7 @@ class Const:
     KEY_BGIMG = 'bgimg'
     KEY_THEME = 'theme'
     KEY_HOSTIP = 'hostip'
-    FILE_CONF = 'conf.ini'
+    FILE_CONF = 'resources/conf.ini'
 
 
 class Style:
