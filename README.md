@@ -11,7 +11,7 @@ A privacy-first, lightweight website navigation service developed based on the P
 
 </div>
 
-![demo](./resources/imgs/webnav.png)
+![demo](./resources/imgs/webnav.mp4)
 
 ## Key points
 
@@ -41,7 +41,7 @@ cd web-nav/
 docker-compose up --build -d
 ```
 
-#### Remove installation
+## Remove installation
 - Stop and remove containers, networks, volumes, and images associated with the Docker Compose.
 ```sh
 docker-compose down
