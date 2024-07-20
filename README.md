@@ -1,6 +1,6 @@
 <div align="center">
 
-<img height="56px" src="./resources/imgs/waisaa.png" alt="WebNav" />
+<img height="56px" src="./resources/imgs/waisaa.png" alt="WebNav" /> WebNav
 
 A privacy-first, lightweight website navigation service developed based on the Python framework PyWebIO.
 
