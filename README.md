@@ -1,6 +1,6 @@
 <div align="center">
 
-<img height="56px" src="./resources/imgs/wn.png" alt="WebNav" />
+<img height="120px" src="./resources/imgs/wn.png" alt="WebNav" />
 
 A privacy-first, lightweight website navigation service developed based on the Python framework PyWebIO.
 
@@ -39,6 +39,12 @@ cd web-nav/
 - Build images of all services and start all services in detached mode
 ```sh
 docker-compose up --build -d
+```
+
+#### Remove installation
+- Stop and remove containers, networks, volumes, and images associated with the Docker Compose.
+```sh
+docker-compose down
 ```
 
 > [!NOTE]
