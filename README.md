@@ -11,7 +11,8 @@ A privacy-first, lightweight website navigation service developed based on the P
 
 </div>
 
-![demo](./resources/imgs/webnav.mp4)
+![Preview](./resources/imgs/webnav.gif)
+
 
 ## Key points
 
