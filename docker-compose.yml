@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      image: waisaa/webnav:latest
+    image: waisaa/webnav:latest
     container_name: wlf_webnav
     depends_on:
       - mysql

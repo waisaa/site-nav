@@ -450,16 +450,14 @@ class MysqlUtil:
     def get(cls, conf: dict, sql: str):
         cls._init(conf)
         res = None
-        cursor = cls.CONN.cursor()
-        cursor.execute(sql)
-        res = cursor.fetchall()
-        cursor.close()
+        with cls.CONN.cursor() as cursor:
+            cursor.execute(sql)
+            res = cursor.fetchall()
         return res
 
     @classmethod
     def save(cls, conf: dict, sql: str):
         cls._init(conf)
-        cursor = cls.CONN.cursor()
-        cursor.execute(sql)
-        cls.CONN.commit()
-        cursor.close()
+        with cls.CONN.cursor() as cursor:
+            cursor.execute(sql)
+            cls.CONN.commit()

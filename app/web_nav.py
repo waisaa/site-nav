@@ -31,6 +31,7 @@ def get_bg_style():
     bgimg = ConfUtil.get_value(Const.FILE_CONF, Const.SECTION_STYLE, Const.KEY_BGIMG)
     bgimgpath = f"static/imgs/bg/{bgimg}"
     bg_style = f"{Style.BG_PRE}{bgimgpath}{Style.BG_SUF}"
+    LogUtil.info("bg_style", bg_style)
     return bg_style
 
 
@@ -142,7 +143,8 @@ def get_link(name_link_dict):
     # LogUtil.info(f'name_link_dict:{name_link_dict}')
     for name in name_link_dict:
         res.append(put_link(name, name_link_dict[name], new_window=True).style('font-size: 20px;'))
-        res.append('\n')
+        res.append(put_html('<div style="height: 10px;"></div>'))
+        # res.append('\n')
     return res
 
 
@@ -171,7 +173,7 @@ def get_tabs():
     for type_name in site_types:
         sites = get_sites_by_type(site_types[type_name])
         links = get_link(sites)
-        tab = {'title': type_name, 'content': put_scrollable(links, height=980, keep_bottom=False, border=False)}
+        tab = {'title': type_name, 'content': put_scrollable(links, height=380, keep_bottom=False, border=False)}
         # tab = {'title': type_name, 'content': links}
         res.append(tab)
     # 下载文件
@@ -194,7 +196,13 @@ def get_imgs():
 
 
 def upload_img():
-    img = file_upload("选择图片:", accept="image/*", placeholder='选择一个图片', multiple=False)
+    img = file_upload(
+        "选择图片:",
+        accept="image/*",
+        placeholder='选择一个图片',
+        max_size='200M',
+        multiple=False
+    )
     if img:
         filename = f'bg{get_new_img_id()}.jpg'
         img_path = f'{Const.DIR_BG}/{filename}'
@@ -210,7 +218,7 @@ def upload_img():
 
 def list_img():
     """背景图片列表"""
-    put_scrollable(put_scope('bgimgs'), height='850', keep_bottom=True, border=False)
+    put_scrollable(put_scope('bgimgs'), height=435, keep_bottom=False, border=False)
     put_table(get_imgs(), scope='bgimgs')
 
 
@@ -273,7 +281,7 @@ def index():
             # put_button("管理", onclick=lambda: go_app('site_list', new_window=False), color='success', outline=True),
         ],
         size='76% 8% 8% 8%')
-    put_markdown('# 网站导航').style('font-size: 200%;')
+    put_markdown('# 网站导航').style('font-size: 200%;font-weight: bold;')
     tabs = get_tabs()
     put_tabs(tabs).style('font-size: 130%;box-shadow: 0 15% 15% rgba(0, 0, 0, .2);')
 

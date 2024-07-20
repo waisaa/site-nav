@@ -47,9 +47,15 @@ http://<yourip>:7777/
 ```
 
 ## Remove installation
-- Stop and remove containers, networks, volumes, and images associated with the Docker Compose.
+- Stop and remove containers, networks, and volumes associated with the Docker Compose.
 ```sh
 docker-compose down
+```
+
+## Reinstallation
+- Stop and remove containers, networks, image and volumes associated with the Docker Compose, then build images of all services and start all services in detached mode.
+```sh
+sh rebuildrun.sh
 ```
 
 > [!NOTE]

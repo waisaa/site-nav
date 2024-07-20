@@ -59,5 +59,5 @@ class Style:
     """
 
     # 背景样式
-    BG_PRE = "body {cursor: url(static/imgs/cursor/shubiao1.png), auto;}\n.bg {position: absolute;top: 0;left: 0;background: url('"
-    BG_SUF = "') no-repeat;width: 100%;height: 100%;overflow: hidden;background-size: cover;opacity: .2;z-index: -1;}"
+    BG_PRE = "body {cursor: url(static/imgs/cursor/shubiao1.png), auto;height: 100%;margin: 0;padding: 0;}\n.bg {position: fixed;top: 0;left: 0;background: url('"
+    BG_SUF = "') no-repeat;width: 100%;height: 100%;background-size: cover;opacity: .2;z-index: -1;}"

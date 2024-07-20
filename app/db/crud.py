@@ -64,6 +64,6 @@ def get_sites_by_type(type):
     sql_res = MysqlUtil.get(Config.MYSQL, sql)
     if sql_res:
         for t in sql_res:
-            res[t[0]] = t[1]
+            res[t[0]] = f'{t[1]}\n'
     # LogUtil.info('get_sites_by_type', res)
     return res
