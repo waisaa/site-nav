@@ -41,6 +41,10 @@ cd web-nav/
 ```sh
 docker-compose up --build -d
 ```
+- Access the service in your browser, the url format is as follows:
+```sh
+http://<yourip>:7777/
+```
 
 ## Remove installation
 - Stop and remove containers, networks, volumes, and images associated with the Docker Compose.
