@@ -1,3 +1,5 @@
+<div align="center">
+
 <img height="56px" src="./resources/imgs/waisaa.png" alt="WebNav" />
 
 A privacy-first, lightweight website navigation service developed based on the Python framework PyWebIO.
@@ -5,7 +7,9 @@ A privacy-first, lightweight website navigation service developed based on the P
 <a href="https://github.com/waisaa/web-nav">Home Page</a> •
 <a href="https://blog.csdn.net/qq_42761569?type=blog">Blogs</a>
 
-[![](https://img.shields.io/badge/webui-webnav-9cf.svg)](http://localhost:7777/) [![](https://img.shields.io/badge/document-pywebio-blue.svg)](https://pywebio.readthedocs.io/) [![](https://img.shields.io/badge/license-WLF-brightgreen.svg)](https://github.com/waisaa/web-nav/tree/main/LICENSE)
+[![](https://img.shields.io/badge/webui-webnav-9cf.svg)](http://localhost:7777/) [![](https://img.shields.io/badge/document-pywebio-blue.svg)](https://pywebio.readthedocs.io/) [![](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/waisaa/web-nav/tree/main/LICENSE)
+
+</div>
 
 ![demo](./resources/imgs/webnav.png)
 
