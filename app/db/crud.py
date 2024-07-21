@@ -1,5 +1,5 @@
 # from core.const import Config
-from core.util import MysqlUtil, LogUtil, ConfUtil
+from core.util import MysqlUtil, LogUtil, UniUtil
 from core.const import *
 import os
 
@@ -64,6 +64,7 @@ def get_sites_by_type(type):
     sql_res = MysqlUtil.get(Config.MYSQL, sql)
     if sql_res:
         for t in sql_res:
+            UniUtil.download_favicon(t[1])
             res[t[0]] = f'{t[1]}\n'
     # LogUtil.info('get_sites_by_type', res)
     return res

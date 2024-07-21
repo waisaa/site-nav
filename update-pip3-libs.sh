@@ -1,0 +1,1 @@
+pip3 download -d ./pip3-libs/ -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com

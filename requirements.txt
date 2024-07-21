@@ -1,6 +1,7 @@
 pywebio==1.6.1
 tornado==5.0.2
 colorlog==6.6.0
-chardet==5.1.0
+chardet==3.0.4
 PyMySQL==1.0.2
 requests==2.27.1
+beautifulsoup4==4.12.3

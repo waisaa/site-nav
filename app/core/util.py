@@ -13,10 +13,63 @@ import requests
 import hashlib
 import chardet
 import base64
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin, urlparse
+from core.const import Const
 
 
 class UniUtil:
     """统一处理工具类"""
+    
+    @staticmethod
+    def download_favicon(url):
+        favicon_path = f"{Const.DIR_FAVICON}/default.png"
+        try:
+            # 解析网站URL
+            parsed_url = urlparse(url)
+            base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
+            favicon_path_parse = f"{Const.DIR_FAVICON}/{parsed_url.netloc}_favicon.ico"
+            
+            # 判断是否已存在
+            if os.path.exists(favicon_path_parse):
+                favicon_path = favicon_path_parse
+            else:
+                # 请求网站主页内容
+                response = requests.get(url)
+                if response.status_code == 200:
+                
+                    # 解析HTML内容
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    
+                    # 查找favicon的URL
+                    icon_link = None
+                    for link in soup.find_all('link'):
+                        rel = link.get('rel', [])
+                        if 'icon' in rel or 'shortcut icon' in rel:
+                            icon_link = link.get('href')
+                            break
+                    
+                    if not icon_link:
+                        # 尝试默认的favicon位置
+                        icon_link = '/favicon.ico'
+                    
+                    # 组合完整的favicon URL
+                    favicon_url = urljoin(base_url, icon_link)
+                    
+                    # 请求favicon文件
+                    favicon_response = requests.get(favicon_url, stream=True)
+                    if favicon_response.status_code == 200:
+                        # 保存favicon文件
+                        with open(favicon_path_parse, 'wb') as f:
+                            for chunk in favicon_response.iter_content(1024):
+                                f.write(chunk)
+                        favicon_path = favicon_path_parse
+                        LogUtil.info(f"Favicon downloaded and saved as {favicon_path}")
+                    else:
+                        LogUtil.warn(f"Failed to download the favicon from: {url}")
+        except Exception as e:
+            LogUtil.warn(f"Failed to download the favicon from: {url}", e)
+        return favicon_path.replace('resources', 'static')
     
     @staticmethod
     def base64_decrypt(base64_str: str) -> str:

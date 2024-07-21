@@ -31,7 +31,7 @@ def get_bg_style():
     bgimg = ConfUtil.get_value(Const.FILE_CONF, Const.SECTION_STYLE, Const.KEY_BGIMG)
     bgimgpath = f"static/imgs/bg/{bgimg}"
     bg_style = f"{Style.BG_PRE}{bgimgpath}{Style.BG_SUF}"
-    LogUtil.info("bg_style", bg_style)
+    # LogUtil.info("bg_style", bg_style)
     return bg_style
 
 
@@ -62,6 +62,13 @@ def write_record():
     config(title=Const.TITLE_WEB, theme=get_theme(), css_style=get_bg_style())
     config_style()
     back_home()
+    put_html('''
+        <div style="display: flex; align-items: left;">
+            <img src="./static/imgs/edit.png" alt="edit" style="background-color: transparent;height:30px; margin-right: 10px; margin-top: 8px;">
+            <span style="font-size: 30px;">信息录入</span>
+        </div>
+    ''')
+    put_html('<hr style="border: 0.2px solid white;height:2px;">')
     write()
 
 
@@ -100,6 +107,7 @@ def do_save():
     if local.site_name and local.site_valid:
         with popup('录入中...', closable=False, size=PopupSize.SMALL) as s:
             with put_loading(shape='grow', color='secondary').style('width:17rem; height:17rem'):
+                UniUtil.download_favicon(local.site_link)
                 sta, nm = save_site(local.site_type, local.site_name, local.site_link)
                 close_popup()
                 if sta == 1:
@@ -122,19 +130,29 @@ def search_for():
     config(title=Const.TITLE_WEB, theme=get_theme(), css_style=get_bg_style())
     config_style()
     back_home()
-    put_markdown('# 搜索网站').style('font-size: 200%')
+    put_html('''
+        <div style="display: flex; align-items: left;">
+            <img src="./static/imgs/search.png" alt="search" style="background-color: transparent;height:30px; margin-right: 10px; margin-top: 8px;">
+            <span style="font-size: 30px;">信息搜索</span>
+        </div>
+    ''')
+    put_html('<hr style="border: 0.2px solid white;height:2px;">')
     put_input('search', placeholder='请输入网站关键字').style('font-size: 130%')
     while True:
         changed = pin_wait_change('search', timeout=10)
         name_search = pin.search
         name_search = name_search if len(name_search) != 0 else None
-        name_search.replace("'", "")
+        if name_search:
+            name_search.replace("'", "")
         # LogUtil.info(f'name_search:{name_search}')
         res_search = get_site_by_name_like(name_search)
         with use_scope('res', clear=True):
             for k in res_search:
-                put_link(k, res_search[k], new_window=True).style('font-size: 130%')
-                put_text('')
+                web_site = res_search[k]
+                favicon_path = UniUtil.download_favicon(web_site)
+                put_html(f'<img src="{favicon_path}" alt="Image" style="background-color: transparent;height:18px;margin-right: 3px; margin-bottom: 3px;">')
+                put_link(k, web_site, new_window=True).style('font-size: 130%')
+                put_html('<div style="height: 10px;"></div>')
 
 
 def get_link(name_link_dict):
@@ -142,9 +160,11 @@ def get_link(name_link_dict):
     res = []
     # LogUtil.info(f'name_link_dict:{name_link_dict}')
     for name in name_link_dict:
-        res.append(put_link(name, name_link_dict[name], new_window=True).style('font-size: 20px;'))
+        web_site = name_link_dict[name]
+        favicon_path = UniUtil.download_favicon(web_site)
+        res.append(put_html(f'<img src="{favicon_path}" alt="Image" style="background-color: transparent;height:18px;margin-right: 3px; margin-bottom: 3px;">'))
+        res.append(put_link(name, web_site, new_window=True).style('font-size: 20px;'))
         res.append(put_html('<div style="height: 10px;"></div>'))
-        # res.append('\n')
     return res
 
 
@@ -161,7 +181,7 @@ def downloads_tabs():
     for file in os.listdir(Const.DIR_DOWLOAD):
         files[file] = get_download_url(file)
     links = get_link(files)
-    return {'title': '下载', 'content': put_scrollable(links, height=980, keep_bottom=False, border=False)}
+    return {'title': '下载', 'content': put_scrollable(links, height=380, keep_bottom=False, border=False)}
 
 
 def get_tabs():
@@ -174,7 +194,6 @@ def get_tabs():
         sites = get_sites_by_type(site_types[type_name])
         links = get_link(sites)
         tab = {'title': type_name, 'content': put_scrollable(links, height=380, keep_bottom=False, border=False)}
-        # tab = {'title': type_name, 'content': links}
         res.append(tab)
     # 下载文件
     # res.append(downloads_tabs())
@@ -218,7 +237,7 @@ def upload_img():
 
 def list_img():
     """背景图片列表"""
-    put_scrollable(put_scope('bgimgs'), height=435, keep_bottom=False, border=False)
+    put_scrollable(put_scope('bgimgs'), height=430, keep_bottom=False, border=False)
     put_table(get_imgs(), scope='bgimgs')
 
 
@@ -240,12 +259,27 @@ def back_home():
     ], size='92% 8%')
 
 
+def show_loading():
+    with popup('加载中...', closable=False, size=PopupSize.SMALL) as s:
+        with put_loading(shape='grow', color='secondary').style('width:17rem; height:17rem'):
+            # 使用 defer_call 来确保在 list_img 执行完后关闭弹窗
+            defer_call(close_popup)
+
+
 def custom_config():
     config(title=Const.TITLE_WEB, theme=get_theme(), css_style=get_bg_style())
     config_style()
     back_home()
-    put_markdown('# 个性化设置').style('font-size: 200%')
+    put_html('''
+        <div style="display: flex; align-items: left;">
+            <img src="./static/imgs/settings.png" alt="settings" style="background-color: transparent;height:30px; margin-right: 10px; margin-top: 8px;">
+            <span style="font-size: 30px;">系统设置</span>
+        </div>
+    ''')
+    put_html('<hr style="border: 0.2px solid white;height:2px;">')
+    show_loading()
     list_img()
+    close_popup()
     put_row([
         None,
         put_button("切换主题", onclick=lambda: change_theme(), color='success', outline=True),
@@ -281,8 +315,16 @@ def index():
             # put_button("管理", onclick=lambda: go_app('site_list', new_window=False), color='success', outline=True),
         ],
         size='76% 8% 8% 8%')
-    put_markdown('# 网站导航').style('font-size: 200%;font-weight: bold;')
+    put_html('''
+        <div style="display: flex; align-items: left;">
+            <img src="./static/imgs/home.png" alt="home" style="background-color: transparent;height:30px; margin-right: 10px; margin-top: 8px;">
+            <span style="font-size: 30px;">网站导航</span>
+        </div>
+    ''')
+    put_html('<hr style="border: 0.2px solid white;height:2px;">')
+    show_loading()
     tabs = get_tabs()
+    close_popup()
     put_tabs(tabs).style('font-size: 130%;box-shadow: 0 15% 15% rgba(0, 0, 0, .2);')
 
 
@@ -302,7 +344,7 @@ def main():
         # host='localhost',
         host='0.0.0.0',
         port=7777,
-        debug=True,
+        debug=False,
         cdn=False,
         static_dir=Const.DIR_STATIC,
         # auto_open_webbrowser=True,

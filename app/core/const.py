@@ -8,6 +8,7 @@ class Const:
     THEMES = ['default', 'dark', 'sketchy', 'minty', 'yeti']
     IMG_BG_DEFAULT = 'bg0.jpg'
     DIR_STATIC = './resources'
+    DIR_FAVICON = './resources/favicon'
     # section
     SECTION_STYLE = 'style'
     SECTION_DEPLOY = 'deploy'
