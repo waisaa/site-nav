@@ -12,9 +12,11 @@ class Const:
     # section
     SECTION_STYLE = 'style'
     SECTION_DEPLOY = 'deploy'
+    SECTION_STARTUP = 'startup'
     # key
     KEY_BGIMG = 'bgimg'
     KEY_THEME = 'theme'
+    KEY_INIT = 'init'
     KEY_HOSTIP = 'hostip'
     FILE_CONF = 'resources/conf.ini'
 

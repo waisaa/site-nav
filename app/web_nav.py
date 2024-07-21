@@ -251,6 +251,14 @@ def change_theme():
     custom_config()
 
 
+def reset_theme():
+    """改变主题"""
+    ConfUtil.set_value(Const.FILE_CONF, Const.SECTION_STYLE, Const.KEY_BGIMG, 'bg0.jpg')
+    ConfUtil.set_value(Const.FILE_CONF, Const.SECTION_STYLE, Const.KEY_THEME, 'sketchy')
+    refresh()
+    custom_config()
+
+
 def back_home():
     """返回首页"""
     put_row([
@@ -260,10 +268,12 @@ def back_home():
 
 
 def show_loading():
-    with popup('加载中...', closable=False, size=PopupSize.SMALL) as s:
-        with put_loading(shape='grow', color='secondary').style('width:17rem; height:17rem'):
-            # 使用 defer_call 来确保在 list_img 执行完后关闭弹窗
-            defer_call(close_popup)
+    popup('加载中...', put_markdown('![loading](./static/imgs/loading.gif)'), closable=False, size=PopupSize.SMALL)
+    # with popup('加载中...', closable=False, size=PopupSize.SMALL) as s:
+    #     pass
+        # with put_loading(shape='grow', color='secondary').style('width:17rem; height:17rem'):
+        #     # 使用 defer_call 来确保在 list_img 执行完后关闭弹窗
+        #     defer_call(close_popup)
 
 
 def custom_config():
@@ -283,9 +293,10 @@ def custom_config():
     put_row([
         None,
         put_button("切换主题", onclick=lambda: change_theme(), color='success', outline=True),
+        put_button("恢复默认", onclick=lambda: reset_theme(), color='success', outline=True),
         put_button("上传图片", onclick=lambda: upload_img(), color='success', outline=True),
         None,
-    ], size='35% 15% 15% 35%')
+    ], size='27.5% 15% 15% 15% 27.5%')
 
 
 def site_list():
@@ -326,6 +337,10 @@ def index():
     tabs = get_tabs()
     close_popup()
     put_tabs(tabs).style('font-size: 130%;box-shadow: 0 15% 15% rgba(0, 0, 0, .2);')
+    init = ConfUtil.get_value(Const.FILE_CONF, Const.SECTION_STARTUP, Const.KEY_INIT)
+    if init == '0':
+        ConfUtil.set_value(Const.FILE_CONF, Const.SECTION_STARTUP, Const.KEY_INIT, '1')
+        refresh()
 
 
 def main():
